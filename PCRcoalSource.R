@@ -17,33 +17,6 @@ setClass(
     sealed=TRUE
 );
 
-setMethod(
-    "as.character",
-    c("PCRcoal"),
-    function(
-        x
-    ) {
-        str<-paste("Initial size:\t\t",as.character(x@initial.size),"\n")
-        str<-paste(str,"Number of cycles:\t\t",as.character(x@nr.cycles),"\n")
-        str<-paste(str,"Efficiencies:\t\t",as.character(x@efficiencies),"\n")
-        str<-paste(str,"Sample size:\t\t",as.character(x@sample.size),"\n")
-        str<-paste(str,"Max tries:\t\t",as.character(x@max.tries),"\n")
-       
-        return(str) 
-    }
-);
-
-setMethod(
-    "print",
-    c("PCRcoal"),
-    function(
-        x
-    ) {
-        cat(as.character(x))
-        return(invisible(x))
-    }
-);
-
 setGeneric("PCRcoal", function(object, ... ) standardGeneric("PCRcoal"));
 setMethod(
     "PCRcoal",
@@ -72,6 +45,7 @@ setMethod(
         if(!missing(efficiencies)){
             this@efficiencies   <-efficiencies;
         } else if (!missing(nr.cycles)){
+            # The default is an efficiency of 1.0 in all cycles:
             this@efficiencies<-rep(1.0, nr.cycles)
         }
 
@@ -180,9 +154,9 @@ setMethod(
 
     .check.integer(this@max.tries,"max.tries") 
     
-    # Dangerous situation by experience:
+    # Dangerous situation by experience, causes integer overflow:
     if(all(this@efficiencies == 1.0) && (this@nr.cycles > 31)){
-        stop("Simulation failed: all efficeincies are 1.0 and the number of cycles is larger than 31!");
+        stop("Simulation failed: all efficiencies are 1.0 and the number of cycles is larger than 31!");
     }
 }
 
@@ -284,8 +258,9 @@ while (TRUE) {
       pools     <-tmp$pools
       max.node  <-tmp$max
       rm(tmp)
+      
+      # Number of the leafs in the final tree:
       nr.leafs  <-max.node
-      # End init pools
 
       # "Declare" phylo object elements
       edge.from <-integer()
@@ -301,7 +276,7 @@ while (TRUE) {
            nr <- as.numeric(s)
            tp   <- .traceSubsam(pools[[s]],as.numeric(size.traj[nr,]),max.node)
 
-           # Update maximum node id:      
+           # Update maximum node id:
            max.node <- tp$max.node
 
            # Update tree elements:
@@ -315,7 +290,7 @@ while (TRUE) {
       }
       
       # Coalesce base nodes: 
-      tp   <-  .coalBase(base.pool, max.node)
+      tp   <-  .coalBase(base.pool, max.node, subsam, this)
      
       max.node  <- tp$max.node 
       # Update tree elements:
@@ -328,7 +303,7 @@ while (TRUE) {
 
       phylo$edge            <-cbind(edge.from, edge.to)
       phylo$edge.length     <-edge.len
-      phylo$Nnode           <-(max(phylo$edge) - nr.leafs)
+      phylo$Nnode           <-(max.node - nr.leafs)
       phylo$tip.label       <-paste("m",1:nr.leafs,sep="")
 
       phylo                 <-.mapInternalNodes(phylo, max.node, nr.leafs)
@@ -347,16 +322,21 @@ while (TRUE) {
     if(p$Nnode < 1) { stop("\n\nSimulation resulted in a tree with a single node (which is invalid)!\n\n") }
     if(p$Nnode == 1){ return(p) }
 
+    # APE requires the root node to have the id "max.leaf + 1"
+    # , so the internal nodes must be mapped:
     int.nodes   <- (nr.leafs +1):max.node
     rev.nodes   <- rev(int.nodes)
 
     node.map    <- list() 
-    
+   
+    # Build node map: 
     for(i in 1:length(int.nodes)) {
         node.map[[ as.character(int.nodes[i]) ]]    <- rev.nodes[i]
     }
 
     d   <- dim(p$edge) 
+
+    # Substitute nodes:
     p$edge<-as.numeric(p$edge)
 
     for(i in 1:length(p$edge) ) {
@@ -371,7 +351,7 @@ while (TRUE) {
     return(p)
 }
 
-.coalBase<-function(base.pool, max.node){
+.coalBase<-function(base.pool, max.node, subsample, this){
     res <- list()
 
     res$edge.from<-integer()
@@ -413,10 +393,17 @@ while (TRUE) {
 
     res$max.node    <- max.node
     
-    # Deal wit the last node:
+    # Deal with the last node:
     last.node   <- names(base.pool)[1]
 
+    # What if last node has branch length? 
     if(base.pool[[last.node]] > 0) {
+
+       # This implies that all but one subsample has size zero!
+       if( !any(subsample == this@sample.size) ){
+        stop("The final node has replication count > 0, yet more than one subsample has non-zero size!")
+       }
+
        # Create the "ultimate node":
        ultimate.node    <- max.node + 1
        # Create edge:
@@ -497,7 +484,7 @@ while (TRUE) {
 
     res$tree        <- tree
     res$max.node    <- max.node
-    res$base.node   <- names(pool)[1]
+    res$base.node   <- names(pool)[1]   # This is not necessarily max.node
     res$base.bl     <- pool[[1]]
 
     return(res)
@@ -505,7 +492,7 @@ while (TRUE) {
 
 .coalNodes<-function(pool, Li, tree, max.node){
     res<-list()
-    res$pool    <- pool
+
     new.nodes   <- integer()
 
     # Sample nodes to coalesce:

@@ -45,6 +45,7 @@ setMethod(
         if(!missing(efficiencies)){
             this@efficiencies   <-efficiencies;
         } else if (!missing(nr.cycles)){
+            # The default is an efficiency of 1.0 in all cycles:
             this@efficiencies<-rep(1.0, nr.cycles)
         }
 
@@ -153,9 +154,9 @@ setMethod(
 
     .check.integer(this@max.tries,"max.tries") 
     
-    # Dangerous situation by experience:
+    # Dangerous situation by experience, causes integer overflow:
     if(all(this@efficiencies == 1.0) && (this@nr.cycles > 31)){
-        stop("Simulation failed: all efficeincies are 1.0 and the number of cycles is larger than 31!");
+        stop("Simulation failed: all efficiencies are 1.0 and the number of cycles is larger than 31!");
     }
 }
 

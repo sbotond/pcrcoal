@@ -108,7 +108,8 @@ setMethod(
         return(
             list(
                 "phylo"           = tree,
-                "trajectories"    = size.trajectory
+                "trajectories"    = size.trajectory,
+                "subsamples"      = subsamples
             )
         );
     }

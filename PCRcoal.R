@@ -115,6 +115,30 @@ setMethod(
     }
 );
 
+setGeneric("sample.trs", function(this, ... ) standardGeneric("sample.trs"));
+setMethod(
+    "sample.trs",
+    c("PCRcoal"),
+    function(
+        this
+    ) {
+
+        # Sample size trajectory:
+        size.trajectory    <- .sampleTrajectory(this);
+
+        # Sample subsample sizes:
+        subsamples         <- .sampleMolecules(this, size.trajectory);
+        
+        return(
+            list(
+                "trajectories"    = size.trajectory,
+                "subsamples"      = subsamples
+            )
+        );
+    }
+);
+
+
 .checkInput<-function(this){
    
 

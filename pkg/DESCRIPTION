@@ -4,9 +4,9 @@ Date: 2010-10-27
 Title: R package 
 Author: Botond Sipos <sbotond@ebi.ac.uk>
 Maintainer: Botond Sipos <sbotond@ebi.ac.uk>
-Depends: R (>= 2.11.1), ape (>= 2.3), ggplot2 (>= 0.8.8), methods (>= 2.11.1)
+Depends: R (>= 2.11.1), ape (>= 2.3), ggplot2 (>= 0.8.8), methods (>= 2.11.1), phylosim (>= 0.12)
 Suggests: phylosim 
-Imports: ape, methods
+Imports: ape, methods, phylosim
 Description: pcrcoal
 License: GPL (>= 3)
 URL: http://github.com/sbotond/pcrcoal

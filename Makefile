@@ -22,7 +22,7 @@ pkg: *.R cat
 checkpkg: pkg 
 	R CMD check $(PKG)
 clean:
-	(rm *.log; rm $(PKG);rm -r ./phylosim.Rcheck; rm ./pkg/R/*.R;true ) 2>&1 > /dev/null
+	(rm *.log; rm $(PKG);rm -r ./pcrcoal.Rcheck; rm ./pkg/R/*.R;true ) 2>&1 > /dev/null
 inst: pkg
 	R CMD INSTALL	$(PKG)
 remove:

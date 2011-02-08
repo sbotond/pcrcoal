@@ -12,12 +12,13 @@
 
 # Construct trajectory matrix: 
         traj.mat<-matrix(
-            nrow=this@initial.size, # a row for each starting molecule
-            ncol=this@nr.cycles     # a column for each cycle
+            nrow=this@initial.size,	# a row for each starting molecule
+            ncol=this@nr.cycles + 1  	# a column for each "generation"
         );
 
-tries       <- 1
+tries  <- 1
 
+# Try to sample a sane subsample size vector. Give up after max.tries times.
 while (TRUE) {
 
     if(tries >= this@max.tries){
@@ -31,7 +32,8 @@ while (TRUE) {
         for(j in 2:ncol(traj.mat)){
         
             prev.size <- traj.mat[i, j-1]
-            traj.mat[i,j]<- prev.size + rbinom(n=1, size=prev.size,prob=this@efficiencies[j]) 
+            traj.mat[i,j]<- prev.size + rbinom(n=1, size=prev.size,prob=this@efficiencies[j-1]) 
+	    print(this@efficiencies[j-1])
 
         }
 
@@ -42,7 +44,7 @@ while (TRUE) {
         stop("NaN elements in the trajectory matrix! Maybe the cycle number is too high?")
     }
 
-    # Check if final size is large enogh:
+    # Check if final size is large enough:
     final.size<-sum(traj.mat[,ncol(traj.mat)])
     if(this@sample.size > final.size){
         # Try again

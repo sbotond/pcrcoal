@@ -33,9 +33,8 @@ while (TRUE) {
         
             prev.size <- traj.mat[i, j-1]
             traj.mat[i,j]<- prev.size + rbinom(n=1, size=prev.size,prob=this@efficiencies[j-1]) 
-	    print(this@efficiencies[j-1])
-
-        }
+        
+	}
 
     }
 

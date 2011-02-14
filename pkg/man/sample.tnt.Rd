@@ -23,7 +23,7 @@
 \value{
 	A list containing the following elements:
 	\describe{
-	\item{phylo}{A \code{\link{ape}} \code{phylo} object (rooted)}
+	\item{phylo}{A \code{\link{ape}} \code{phylo} object (rooted).}
 	\item{trajectories}{A matrix containing the sampled size trajectories (rows ~ subsamples, columns ~ cycles).}
 	\item{subsamples}{A vector of subsample sizes.}
 	}

@@ -85,6 +85,9 @@
         node.map[[ as.character(int.nodes[i]) ]]    <- rev.nodes[i]
     }
 
+	rm(int.nodes)
+	rm(rev.nodes)
+
     d   <- dim(p$edge) 
 
     # Substitute nodes:

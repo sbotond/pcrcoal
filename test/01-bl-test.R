@@ -8,6 +8,10 @@ system("cd ..;make cat");
 # Load package source:
 source("../PCRcoalSource.R");
 
+# Redirect output:
+sink("01-bl-test.log")
+pdf("01-bl-test.pdf")
+
 x<-PCRcoal(
         initial.size    =1,
         sample.size     =1,

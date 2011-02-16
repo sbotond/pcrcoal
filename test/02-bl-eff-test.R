@@ -26,7 +26,7 @@ expected.bl<-function(eff, nr.cycles ){
 
 # Function to sample a vector of efficiencies having a mean between 0.5 and 1.0:
 sample.effs <- function(nr.cycles){
-	ru <- runif(1,min=0,max=1)
+	ru <- runif(1,min=0.5,max=1)
         effs <- rbeta(nr.cycles, shape1=1,shape2=((1-ru)/ru) )
 	effs <- (effs * 0.5) + 0.5
         return(effs)

@@ -3,6 +3,7 @@
 # Redirect output:
 sink("02-bl-eff-test.log")
 pdf("02-bl-eff-test.pdf")
+
 # Load required libraries:
 library(ape)
 suppressMessages(require(methods,quietly=TRUE));
@@ -11,12 +12,24 @@ system("cd ..;make cat");
 # Load package source:
 source("../PCRcoalSource.R");
 
+# Numberf of PCR cycles:
 nr.cycles 	<- 30
+# Number of sampled efficiency vectors:
 nr.effs		<- 1000
-nr.replications	<- 10000
+# Number of "trees" sampled for a given efficiency vector:
+nr.replications	<- 5000
 
+# Function to calculate the expected branch length:
 expected.bl<-function(eff, nr.cycles ){
-	nr.cycles * ( 1 - 1/(mean(eff) + 1) )
+	nr.cycles * ( 1 - 1/(eff + 1) )
+}
+
+# Function to sample a vector of efficiencies having a mean between 0.5 and 1.0:
+sample.effs <- function(nr.cycles){
+	ru <- runif(1,min=0,max=1)
+        effs <- rbeta(nr.cycles, shape1=1,shape2=((1-ru)/ru) )
+	effs <- (effs * 0.5) + 0.5
+        return(effs)
 }
 
 mean.bl <- numeric()
@@ -24,8 +37,10 @@ exp.bl	<- numeric()
 
 for(i in 1:nr.effs){
 
-	efficiencies<-runif(nr.cycles, min=0.5,max=1)	
+	# Sample efficiencies:
+	efficiencies<-sample.effs(nr.cycles)
 
+	# Construct the simulation object:
 	x<-PCRcoal(
         	initial.size    =1,
         	sample.size     =1,
@@ -34,24 +49,24 @@ for(i in 1:nr.effs){
 	);
 
 	branch.lengths<-numeric()
-
+	
+	# Sample nr.replications branch lengths:
 	for (i in 1:nr.replications){
 		branch.lengths[i] <- sample.tree(x)$edge.length[1]
 	}
 
+	# Update the expected and observed branch length vectors:
 	mean.bl <- c( mean.bl, mean(branch.lengths) )
-	exp.bl <- expected.bl(efficiencies, nr.cycles)
+	exp.bl <- c(exp.bl, expected.bl(mean(efficiencies), nr.cycles))
 }
 
+# Plot expected vs. observed brnach lenghts:
+plot(mean.bl, exp.bl)
 
-plot(exp.bl, mean.bl)
-
-reg<-lm(exp.bl ~ eff.seq)
+# Regression through (0,0):
+reg<-lm(mean.bl ~ -1 + exp.bl)
 
 summary(reg)
 
 plot(reg)
-
-
-
 

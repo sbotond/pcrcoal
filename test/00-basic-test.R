@@ -5,6 +5,9 @@ library(ape)
 suppressMessages(require(methods,quietly=TRUE));
 system("cd ..;make cat");
 
+# Redirect output:
+sink("00-basic-test.log")
+
 # Load package source:
 source("../PCRcoalSource.R");
 

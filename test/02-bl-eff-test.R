@@ -60,7 +60,7 @@ for(i in 1:nr.effs){
 	exp.bl <- c(exp.bl, expected.bl(mean(efficiencies), nr.cycles))
 }
 
-# Plot expected vs. observed brnach lenghts:
+# Plot expected vs. observed branch lenghts:
 plot(mean.bl, exp.bl)
 
 # Regression through (0,0):

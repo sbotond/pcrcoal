@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
 
 # Redirect output:
-sink("02-bl-eff-test.log")
-pdf("02-bl-eff-test.pdf")
+sink("03-eff-large-pool.log")
+pdf("03-eff-large-pool.pdf")
 
 # Load required libraries:
 library(ape)

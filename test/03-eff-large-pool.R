@@ -15,9 +15,9 @@ source("../PCRcoalSource.R");
 # Numberf of PCR cycles:
 nr.cycles 	<- 30
 # Number of sampled efficiency vectors:
-nr.effs		<- 1000
+nr.effs		<- 500
 # Number of "trees" sampled for a given efficiency vector:
-nr.replications	<- 5000
+nr.replications	<- 500
 
 # Function to calculate the expected branch length:
 expected.bl<-function(eff, nr.cycles ){

@@ -1,5 +1,10 @@
 #!/usr/bin/env Rscript
 
+# This script will simulate coalescent PCR trees under a 
+# range of parameters. It takes a long time to finish.
+#
+# Output: 00-basic-test.log
+
 # Load required libraries:
 library(ape)
 suppressMessages(require(methods,quietly=TRUE));
@@ -11,10 +16,10 @@ sink("00-basic-test.log")
 # Load package source:
 source("../PCRcoalSource.R");
 
-init.sizes      <-1:500
-sample.sizes    <-2:500
-nr.cycles       <-10:25
-effs            <-seq(from=0.2,to=1.0,by=0.1)
+init.sizes      <-1:500 # Initial number of molecules.
+sample.sizes    <-2:500 # Number of sampled molecules after PCR.
+nr.cycles       <-10:25 # Number of cycles.
+effs            <-seq(from=0.2,to=1.0,by=0.1) # Per-cycle efficiencies.
 
 for(i.sz    in init.sizes){
 for(s.sz    in sample.sizes){

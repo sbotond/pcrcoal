@@ -1,5 +1,21 @@
 #!/usr/bin/env Rscript
 
+# This script runs a large number of coalescent PCR simulations with 3 sampled molecules from a very large final molecule pool.
+# The efficiency vectors are sampled from beta distributions and are scaled to have 
+# means in the range [0.5, 1.0].
+#
+# It runs several simulation under a sampled efficiency vector and saves the mean of simulated non-zero
+# branch lengths. As the size of the final molecule population is huge, the probability of coalescence is 
+# very small, so we can assume that averaging the non-zero branch lengths from a given tree is reasonable
+# to do.
+#
+# The expected value of the simulated branch lengths is approximated as nr_cycles * [ mean(eff) / (1 + mean(eff))],
+# where "eff" is the vector of per-cycle PCR efficiencies (see also 01-bl-test.R).
+#
+# Output:
+#   * 03-eff-large-pool.pdf - scatter plot of expected versus mean realized branch lengths under a given efficiency vector
+#   * 03-eff-large-pool.log - linear regression of mean realized vs expected branch lengths
+
 # Redirect output:
 sink("03-eff-large-pool.log")
 pdf("03-eff-large-pool.pdf")
@@ -66,6 +82,7 @@ plot(mean.bl, exp.bl)
 
 # Regression through (0,0):
 reg<-lm(mean.bl ~ -1 + exp.bl)
+abline(reg)
 
 summary(reg)
 

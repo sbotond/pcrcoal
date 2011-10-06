@@ -16,7 +16,7 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
 \note{
 \itemize{
 	\item The original method of Weiss and von Haeseler produces a tree containing a multifurcating root node connected to the subtrees
-	corresponding to the different subsamples. In order to be able to store the output in \code{phylo} objects, \code{PCRcoal} randomly  	"coalesces" the subsample trees with zero branch lengths. Some branch length might be non-zero, in the case a subsample coalesced into one molecule which accumulated branch length ("replication count") in the previous cycles.
+	corresponding to the different subsamples. In order to be able to store the output in \code{phylo} objects, \code{PCRcoal} randomly breaks the polytomy by "coalescing" the subsample trees with zero branch lengths. Some branch length might be non-zero, in the case a subsample coalesced into one molecule which accumulated branch length ("replication count") in the previous cycles.
 
 	\item If the cycle number and/or the efficiencies are small, it can happen that the number of the molecules after the amplification is less than the specified sample size. \code{PCRcoal} will try sampling size trajectories \code{max.tries} times (100 by default) to get enough amplified molecules and then aborts the simulation.
 }
@@ -29,10 +29,11 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
 \section{Usage}{
 	\code{
 	PCRcoal(
-		efficiencies,
+        initial.size,
 		nr.cycles,
+		efficiencies,
 		sample.size,
-		max.tries
+		max.tries=100
 	)
 	}
 
@@ -43,7 +44,7 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
   \describe{
     	\item{\code{initial.size}:}{Number of template molecules.}
     	\item{\code{nr.cycles}:}{Number of PCR cycles.}
-    	\item{\code{efficiencies}:}{Per-cycle PCR efficiencies.}
+    	\item{\code{efficiencies}:}{A vector of per-cycle PCR efficiencies. It is recycled if its length is smaller than \code{nr.cycles}.}
     	\item{\code{sample.size}:}{Number of molecules sampled after amplification.}
     	\item{\code{max.tries}:}{Maximum number of tries when sampling a size trajectory with a large enough final size.}
     }
@@ -73,6 +74,7 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
 	##
 	## Method: sample.tree
 	##
+
 	 # Sample a coalescent tree:
         tree <- sample.tree(sim)
 
@@ -85,6 +87,7 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
 	##
 	## Method: sample.tnt
 	##
+
 	# Sample a coalescent tree with subsample sizes and
 	# size trajectories:
         res <- sample.tnt(sim)
@@ -101,6 +104,7 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
 	##
 	## Method: sample.trs
 	##
+
 	# Sample subsample sizes and size trajectories:
         res <- sample.trs(sim)
 
@@ -113,6 +117,7 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
 	##
 	## Simulating mutations using PhyloSim
 	##
+
 	# Sample tree:
 	tree <- sample.tree(sim)
 

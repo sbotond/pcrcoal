@@ -10,6 +10,9 @@
 # Check if everything is sane about the object:
 .checkInput(this)
 
+# Recycle efficiency vector:
+eff <- rep(this@efficiencies, length.out=this@nr.cycles)
+
 # Construct trajectory matrix: 
         traj.mat<-matrix(
             nrow=this@initial.size,	# a row for each starting molecule
@@ -32,7 +35,7 @@ while (TRUE) {
         for(j in 2:ncol(traj.mat)){
         
             prev.size <- traj.mat[i, j-1]
-            traj.mat[i,j]<- prev.size + rbinom(n=1, size=prev.size,prob=this@efficiencies[j-1]) 
+            traj.mat[i,j]<- prev.size + rbinom(n=1, size=prev.size,prob=eff[j-1]) 
         
 	}
 

@@ -59,22 +59,22 @@ setMethod(
     }
 );
 
-setGeneric("sample.tree", function(this, ... ) standardGeneric("sample.tree"));
+setGeneric("sample.tree", function(object, ... ) standardGeneric("sample.tree"));
 setMethod(
     "sample.tree",
     c("PCRcoal"),
     function(
-        this
+        object
     ) {
 
         # Sample size trajectory:
-        size.trajectory    <- .sampleTrajectory(this);
+        size.trajectory    <- .sampleTrajectory(object);
 
         # Sample subsample sizes:
-        subsamples         <- .sampleMolecules(this, size.trajectory);
+        subsamples         <- .sampleMolecules(object, size.trajectory);
         
         # Sample tree:
-        tree               <- .sampleTree(this,size.trajectory, subsamples);
+        tree               <- .sampleTree(object, size.trajectory, subsamples);
 
         # Bless & reorder tree:
         class(tree)         <- "phylo"
@@ -84,22 +84,22 @@ setMethod(
     }
 );
 
-setGeneric("sample.tnt", function(this, ... ) standardGeneric("sample.tnt"));
+setGeneric("sample.tnt", function(object, ... ) standardGeneric("sample.tnt"));
 setMethod(
     "sample.tnt",
     c("PCRcoal"),
     function(
-        this
+        object
     ) {
 
         # Sample size trajectory:
-        size.trajectory    <- .sampleTrajectory(this);
+        size.trajectory    <- .sampleTrajectory(object);
 
         # Sample subsample sizes:
-        subsamples         <- .sampleMolecules(this, size.trajectory);
+        subsamples         <- .sampleMolecules(object, size.trajectory);
         
         # Sample tree:
-        tree               <- .sampleTree(this,size.trajectory, subsamples);
+        tree               <- .sampleTree(object, size.trajectory, subsamples);
 
         # Bless & reorder tree:
         class(tree)         <- "phylo"
@@ -115,19 +115,19 @@ setMethod(
     }
 );
 
-setGeneric("sample.trs", function(this, ... ) standardGeneric("sample.trs"));
+setGeneric("sample.trs", function(object, ... ) standardGeneric("sample.trs"));
 setMethod(
     "sample.trs",
     c("PCRcoal"),
     function(
-        this
+        object
     ) {
 
         # Sample size trajectory:
-        size.trajectory    <- .sampleTrajectory(this);
+        size.trajectory    <- .sampleTrajectory(object);
 
         # Sample subsample sizes:
-        subsamples         <- .sampleMolecules(this, size.trajectory);
+        subsamples         <- .sampleMolecules(object, size.trajectory);
         
         return(
             list(
@@ -139,48 +139,45 @@ setMethod(
 );
 
 
-.checkInput<-function(this){
+.checkInput<-function(object){
    
 
     # Missing params:
-    if(length(this@initial.size) == 0){
+    if(length(object@initial.size) == 0){
         stop("Cannot sample trajectory: initial size is missing!")
     }
     else {
-        .check.integer(this@initial.size,"initial size")
+        .check.integer(object@initial.size,"initial size")
     }
 
-    if(length(this@nr.cycles) == 0){
+    if(length(object@nr.cycles) == 0){
         stop("Cannot sample trajectory: the number of cycles is missing!")
     }
     else {
-        .check.integer(this@nr.cycles,"the number of cycles!")
+        .check.integer(object@nr.cycles,"the number of cycles!")
     }
 
-    if(length(this@sample.size) == 0){
+    if(length(object@sample.size) == 0){
         stop("Cannot sample trajectory: the sample size is missing!")
     }
     else {
-        .check.integer(this@sample.size,"the sample size")
+        .check.integer(object@sample.size,"the sample size")
     }
 
-    if(length(this@efficiencies) == 0){
+    if(length(object@efficiencies) == 0){
         stop("Cannot sample trajectory: the efficiencies are missing!")
     }
-    else if(length(this@efficiencies) != this@nr.cycles){
-        stop("Cannot sample trajectory: the length of the efficiency vector must be the same as the number of cycles!")
-    }
-    else if (!is.numeric(this@efficiencies)){
+    else if (!is.numeric(object@efficiencies)){
         stop("Cannot sample trajectory: the efficiencies must be numeric!")
     }
-    else if (any(this@efficiencies > 1.0)){
+    else if (any(object@efficiencies > 1.0)){
         stop("Cannot sample trajectory: the efficiencies must be <= 1!")
     }
 
-    .check.integer(this@max.tries,"max.tries") 
+    .check.integer(object@max.tries,"max.tries") 
     
     # Dangerous situation by experience, causes integer overflow:
-    if(all(this@efficiencies == 1.0) && (this@nr.cycles > 31)){
+    if(all(object@efficiencies == 1.0) && (object@nr.cycles > 31)){
         stop("Simulation failed: all efficiencies are 1.0 and the number of cycles is larger than 31!");
     }
 }

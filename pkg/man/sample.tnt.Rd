@@ -13,11 +13,11 @@
 }
 
 \usage{
-	\S4method{sample.tnt}{PCRcoal}(this)
+	\S4method{sample.tnt}{PCRcoal}(object)
 }
 
 \arguments{
-  \item{this}{A \code{\link{PCRcoal}} object, with all the slots defined.}
+  \item{object}{A \code{\link{PCRcoal}} object, with all the slots defined.}
 }
 
 \value{
@@ -43,7 +43,7 @@
     	)
 
 	# Sample a coalescent tree with subsample sizes and
-        # size trajectories:
+    # size trajectories:
 	res <- sample.tnt(sim)
 
 	# Print subsample sizes:

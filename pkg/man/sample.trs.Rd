@@ -9,15 +9,15 @@
         parameters stored in the slots of the \code{\link{PCRcoal}} object given as the first argument.
 
 	This method does not sample the tree, which makes it faster than the \code{\link{sample.tree}} method.
-	Use this method if you are not interested only in sampling subsamples and size trajectories.
+	Use this method if you are interested only in sampling subsamples and size trajectories.
 }
 
 \usage{
-	\S4method{sample.trs}{PCRcoal}(this)
+	\S4method{sample.trs}{PCRcoal}(object)
 }
 
 \arguments{
-  \item{this}{A \code{\link{PCRcoal}} object, with all the slots defined.}
+  \item{object}{A \code{\link{PCRcoal}} object, with all the slots defined.}
 }
 
 \value{

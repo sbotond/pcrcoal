@@ -13,11 +13,11 @@
 }
 
 \usage{
-	\S4method{sample.tree}{PCRcoal}(this)
+	\S4method{sample.tree}{PCRcoal}(object)
 }
 
 \arguments{
-  \item{this}{A \code{\link{PCRcoal}} object, with all the slots defined.}
+  \item{object}{A \code{\link{PCRcoal}} object, with all the slots defined.}
 }
 
 \value{

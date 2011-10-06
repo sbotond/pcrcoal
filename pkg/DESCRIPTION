@@ -1,7 +1,7 @@
 Package: pcrcoal
 Version: 0.1
 Date: 2010-10-27
-Title: R package 
+Title: A package implementing the coalescent approach to PCR simulation developed by Weiss and von Haeseler (NAR, 1997).
 Author: Botond Sipos <sbotond@ebi.ac.uk>
 Maintainer: Botond Sipos <sbotond@ebi.ac.uk>
 Depends: R (>= 2.11.1), ape (>= 2.3), ggplot2 (>= 0.8.8), methods (>= 2.11.1), phylosim (>= 0.12)

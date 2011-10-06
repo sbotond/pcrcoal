@@ -4,6 +4,7 @@
 ## 
 
 .sampleTree<-function(this, size.traj, subsam){
+
       # Initialize pools
       tmp       <-.initPools(subsam) 
       pools     <-tmp$pools
@@ -24,8 +25,8 @@
            
       for(s in names(pools) ){
 
-           nr <- as.numeric(s)
-           tp   <- .traceSubsam(pools[[s]],as.numeric(size.traj[nr,]),max.node)
+           nr   <- as.numeric(s)
+           tp   <- .traceSubsam(pools[[s]], as.numeric(size.traj[nr,]), max.node)
 
            # Update maximum node id:
            max.node <- tp$max.node
@@ -299,7 +300,7 @@
     ri<-rhyper(
         nn  = 1,       
         m   = sdiff,                # white balls (synthetized)
-        n   = size.traj[cycle],   # black balls (not synthetized)
+        n   = size.traj[cycle],     # black balls (not synthetized)
         k   = Ni                    # balls drawn (total molecules in cycle i)
     )
 
@@ -313,9 +314,9 @@
 .sampleLi<-function(cycle, size.traj, Ni, Ri){
     li<-rhyper(
         nn  =1,
-        m   = (Ni - Ri),    # white balls (not-syntheetized but in subsample)
-        n   = (size.traj[cycle] - (Ni - Ri)), # black balls (not synthetized, not in subsample)
-        k   = Ri            # balls drawn (total molecules synthetized)
+        m   = (Ni - Ri),                        # white balls (not-syntheetized but in subsample)
+        n   = (size.traj[cycle] - (Ni - Ri)),   # black balls (not synthetized, not in subsample)
+        k   = Ri                                # balls drawn (total molecules synthetized)
     ) 
     
     if(is.nan(li)){

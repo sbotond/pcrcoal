@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # This script will simulate coalescent PCR trees under a 
-# range of parameters. It takes a long time to finish.
+# range of parameters. It takes quite a long time to finish.
 #
 # Output: 00-basic-test.log
 

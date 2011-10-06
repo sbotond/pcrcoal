@@ -79,7 +79,6 @@ plot(mean.bl, exp.bl)
 reg<-lm(mean.bl ~ -1 + exp.bl)
 
 summary(reg)
-abline(reg)
 
 plot(reg)
 

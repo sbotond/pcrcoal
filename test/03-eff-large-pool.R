@@ -82,7 +82,6 @@ plot(mean.bl, exp.bl)
 
 # Regression through (0,0):
 reg<-lm(mean.bl ~ -1 + exp.bl)
-abline(reg)
 
 summary(reg)
 

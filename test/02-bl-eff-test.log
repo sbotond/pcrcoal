@@ -4,15 +4,15 @@ lm(formula = mean.bl ~ -1 + exp.bl)
 
 Residuals:
       Min        1Q    Median        3Q       Max 
--0.265250 -0.074032 -0.009774  0.070066  0.221782 
+-0.258984 -0.073270 -0.003821  0.066638  0.256417 
 
 Coefficients:
         Estimate Std. Error t value Pr(>|t|)    
-exp.bl 0.9901892  0.0002168    4567   <2e-16 ***
+exp.bl 0.9903937  0.0002121    4670   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 0.09587 on 999 degrees of freedom
+Residual standard error: 0.09391 on 999 degrees of freedom
 Multiple R-squared:     1,	Adjusted R-squared:     1 
-F-statistic: 2.086e+07 on 1 and 999 DF,  p-value: < 2.2e-16 
+F-statistic: 2.18e+07 on 1 and 999 DF,  p-value: < 2.2e-16 
 

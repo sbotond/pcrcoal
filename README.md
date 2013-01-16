@@ -15,7 +15,7 @@ Weiss, G, von Haeseler, A (1997) A coalescent approach to the polymerase chain r
 Download an install
 -------------------
 
-The released packages are available from the [download page](http://github.com/sbotond/pcrcoal/downloads) and [CRAN](http://cran.r-project.org/web/packages/pcrcoal).
+The released packages are available from [CRAN](http://cran.r-project.org/web/packages/pcrcoal).
 
 Building from source
 --------------------

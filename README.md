@@ -1,7 +1,7 @@
 pcrcoal
 =======
 
-![demo](https://raw.github.com/sbotond/pcrcoal/master/misc/demo.pn)
+![demo](https://raw.github.com/sbotond/pcrcoal/master/misc/demo.png)
 
 <tt>pcrcoal</tt> is an <tt>R</tt> package implementing the coalescent approach to PCR simulation developed by Weiss and von Haeseler ([NAR, 1997](http://dx.doi.org/10.1093/nar/25.15.3082)). The package reports the simulated genealogies as <tt>phylo</tt> objects compatible with the [ape](http://cran.r-project.org/web/packages/ape) package. The reported branch lengths are equal to the number of the replications occured in the respective lineage.
 

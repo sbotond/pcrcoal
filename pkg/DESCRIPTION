@@ -1,15 +1,14 @@
 Package: pcrcoal
-Version: 1.0
-Date: 2010-10-27
+Version: 1.1
+Date: 2012-02-24
 Title: A package implementing the coalescent approach to PCR simulation developed by Weiss and von Haeseler (NAR, 1997).
 Author: Botond Sipos <sbotond@ebi.ac.uk>
 Maintainer: Botond Sipos <sbotond@ebi.ac.uk>
 Depends: R (>= 2.11.1), ape (>= 2.3), ggplot2 (>= 0.8.8), methods (>= 2.11.1), phylosim (>= 0.12)
 Suggests:
-Imports: ape, methods, phylosim
+Imports: 
 Description: pcrcoal
 License: GPL (>= 3)
-URL: http://www.ebi.ac.uk/goldman-srv/pcrcoal
-DevelURL: http://github.com/sbotond/pcrcoal
+URL: http://github.com/sbotond/pcrcoal
 LazyLoad: TRUE
-Packaged: 2009-10-27 03:03:27 UTC; sb
+Packaged: 2012-02-24 03:03:27 UTC; sbotond

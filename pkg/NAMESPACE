@@ -1,2 +1,6 @@
 exportPattern("^[^\\.]");
+import(ape)
+import(ggplot2)
+import(methods)
+import(phylosim)
 

@@ -1,6 +1,6 @@
 
 .PHONY: ct cat com push gt checkpkg clean remove aareload
-PKG=pcrcoal_1.0.tar.gz
+PKG=pcrcoal_1.1.tar.gz
 
 ct:
 	git log --graph
@@ -20,7 +20,7 @@ pkg: *.R cat
 	cp *.R pkg/R/
 	R CMD build pkg
 checkpkg: pkg 
-	R CMD check $(PKG)
+	R CMD check --as-cran $(PKG)
 clean:
 	(rm *.log; rm $(PKG);rm -r ./pcrcoal.Rcheck; rm ./pkg/R/*.R;true ) 2>&1 > /dev/null
 inst: pkg

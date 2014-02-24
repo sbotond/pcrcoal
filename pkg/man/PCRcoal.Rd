@@ -67,7 +67,7 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
         sim <-PCRcoal(
         initial.size    =5,
         sample.size     =10,
-        nr.cycles       =30,
+        nr.cycles       =20,
         efficiencies    =c(rep(0.1, 30))
         )
 
@@ -127,10 +127,10 @@ PCRcoal is a class implementing the coalescent approach to PCR simulation develo
 	# sequence and the substitution process:	
 	psim <- PhyloSim(
 		phylo = tree,
-		root.seq=sampleStates( NucleotideSequence(length=50,processes=list(list(JC69())) ) )
+		root.seq=sampleStates( NucleotideSequence(length=10,processes=list(list(JC69())) ) )
 	)
 	# Scale the tree:	
-	scaleTree(psim,0.12)
+	scaleTree(psim,0.1)
 
 	# Simulate mutations:
 	Simulate(psim)
